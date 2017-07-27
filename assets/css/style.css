@@ -88,7 +88,7 @@ div {}
 section{}
 
 #left{
-    background-color: rgb(209,210,212,.85);
+    background-color: rgb(209,210,212);
     background-image:;
     width:400px;
     height:500px;
@@ -102,7 +102,7 @@ section{}
 }
 
 #right{
-    background-color: rgb(209,210,212,.85);
+    background-color: rgb(209,210,212);
     background-image:;
     width:400px;
     height:500px;
