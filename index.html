@@ -2,57 +2,75 @@
 <html lang="en-us">
   <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  
     <title>HANGGGGG</title>
-    <!-- Latest compiled and minified CSS -->
-    
   </head>
-  <body>
+    <body>
+      <div class="clearfix">
+        <header> 
+            <h1 id="top">IKEA H_ngm_n</h1>
+        </header>
+      </div>
+      <div id="centerbox" class="clearfix">
+        <section id="left">
+          <h2 class="instruct">
+          Guess the IKEA furniture piece, look to the right for a clue!</h2>
+          <br/>
+          <p id="scoreHT"> Your score is : 0</p>
 
-<h1>Hangman IKEA furniture</h1>
-<!-- https://thesipadvisor.files.wordpress.com/2014/04/ikea-slogan.jpg
- -->
-<p id="score"> Your score is : <p>
+          <p>Here is the word....</p>
+          <p id="blanks"></p>
+          <p id="winlose"></p>
 
-<p>Here is the word....</p>
-<p id="blanks"></p>
-<p id="winlose"></p>
+          <p>You have this many guesses left!</p>
+          <p id="tries"></p>
 
-<p>You have this many guesses left!</p>
-<p id="tries"></p>
+          <p>You have guessed these letters so far</p>
+          <p id="letters_array"></p>
+        </section>
+        <section id="right">
+          <div id="slicer">
+            <img src="assets/images/poang.jpg" alt="piece1" id="changer">
+          </div>
+        </section>
+      </div>
+      <footer>
+        <p id="footer"> © Anastasia Mark 2017</p>
+      </footer>
 
-<p>You have guessed these letters so far</p>
-<p id="letters_array"></p>
 
     <script>
 
       // Global Vars.
-      var score = 0;
+      var Uscore = 0;
+      console.log("score at top" + Uscore)
       var userTries = 9;
       var guessList = []; //letters that have been guessed
       var Letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]; //letters list to validate input
       var WINLOSE = ["YOU WON!! Press any key to try a new word.", "You're a loser. Press any key to redeem yourself."];
 
-      var Words = ["absorb", "admete", "agam", "agen", "agnaryd", "agne", "aina", "akurum", "alg", "alkalisk", "alseda", "alster", "alsvik", "alvine", "amalia", "andrup", "andy", "aneboda", "annamoa", "anrik", "ansluta", "anten", "antifoni", "antilop", "antonius", "arholma", "arvinn", "aspelund", "aspvik", "attityd", "barnslig", "basisk", "beddinge", "behandla", "bernhard", "beryll", "bevara", "billy", "birgit", "birkeland", "bitig", "bjursta", "bladhult", "bladis", "blommig", "blomster", "blossande", "boholmen", "bonett", "bredgrund", "brimnes", "bumerang", "byholma", "calypso", "capita", "cecilia", "celeber", "charmig", "chrysalidocarpus", "daglilja", "dalfred", "dave", "degernes", "delikat", "detolf", "dignitet", "dioder", "direkt", "diska", "diskret", "docksta", "dokument", "dold", "domsjã–", "dracaena", "dragan", "droppar", "edgar", "edit", "edland", "edsvik", "effektiv", "egeby", "ekorre", "ektorp", "elisabet", "ellakajsa", "elverdam", "energisk ", "engan", "enje", "epistel", "erbium", "erik", "erikslund", "erland", "erling", "erserud", "erslev", "espressokaffe ", "exklusivt", "fabler", "fabrina", "fado", "fansta", "fantast", "fantastisk", "fartyg", "farum", "fastbo", "fattbar", "favorit", "fenomen", "finngrund", "fiskevik", "flokati", "frakta", "framtid", "franklin", "freden", "fridfull", "frost", "fryken", "fuga", "galant", "galej", "gatten", "gedser", "gemak", "gilbert", "glimma", "glira", "godmorgon", "goliat", "gorm", "grapefrukt", "gratinera", "gregor", "grej", "groland", "grundtal", "gustav", "hagalund", "hake", "hannes", "harola", "hederlig", "heimdal", "hejka", "hemnes", "henriksdal", "hippeastrum", "hjuvik"];
-      var answer = Words[Math.floor(Math.random()* Words.length)];
+      var Words = ["billy", "poang", "ribba"]
+
+      var Images = ["assets/images/billy.jpg", "assets/images/poang.jpg", "assets/images/ribba.jpg"]
+      
+      var random = Math.floor(Math.random()* Words.length)
+      var answer = Words[random];
+      var image = Images[random];
+      document.getElementById("changer").src=image;
+      console.log("answer is ", answer, " images is ", image)
       var Bknword = answer.split(''); // Iterword broken up into an array of letters -->bknword.
       var Dsplword = [];
       for (var i = 0; i < Bknword.length; i++) {
-      Dsplword.push(" _ "); // Dipslayed word with guesses filled in -->DsplWord.
-      };  
-      
-      //starts a new game
-      function reset(){
-        userTries = 9;
-        guessList = [];
-        answer = Words[Math.floor(Math.random()* Words.length)];      
-        Bknword = answer.split(''); // Iterword broken up into an array of letters -->bknword.
-        Dsplword = [];
-        for (var i = 0; i < Bknword.length; i++) {
         Dsplword.push(" _ "); // Dipslayed word with guesses filled in -->DsplWord.
-      };
+      }
 
-      //display functions
-      function i_update(){
+      var pixy = 0
+      var usepix = ""     
+
+      function i_update(){                  //display functions
         document.getElementById("blanks");
         blanks.innerHTML = Dsplword;  
         document.getElementById("tries");
@@ -60,34 +78,60 @@
         document.getElementById("letters_array");
         letters_array.innerHTML = guessList;  
       }
-      i_update()
 
-      function i_winlose(y){
+      function i_winlose(y){              //win loss function
         document.getElementById("winlose");
-        letters_array.innerHTML = WINLOSE[y];  
-        document.getElementById("score");
-        score.innerHTML = "Your score is: " + score;
+        winlose.innerHTML = WINLOSE[y];  
+        document.getElementById("scoreHT");
+        scoreHT.innerHTML = "Your score is: " + Uscore;
       }
+
+      function reset(){       //starts a new game
+        userTries = 9;
+        guessList = [];
+        random = Math.floor(Math.random()* Words.length)
+        answer = Words[random];
+        image = Images[random];        Bknword = answer.split(''); 
+        Dsplword = [];
+        for (var i = 0; i < Bknword.length; i++) {
+        Dsplword.push(" _ ");
+        }
+        pixy = 0
+        document.getElementById("slicer").style.width = (pixy + "px");
+        document.getElementById("changer").src=image;
+     }
+
+      
+      i_update()
 
       //main function initiated when user guesses
       document.onkeyup = function(x) {
-        var guess = x.key;
-        console.log("player guesses "+guess);
+        var guess = x.key.toLowerCase();
         // check if the letter is in the word & NOT already guessed
         if ((Bknword.indexOf(guess) >= 0) && (Letters.indexOf(guess) >= 0)) {
-          console.log("player guess is in");
+          //using jquery $.each
+          // $.each(Bknword, function(index, element) {if (Bknword[index] == guess){
+          //     Dsplword[index] = " "+guess;
+          //     console.log("current word " + Dsplword);
+          //   }
+          //   else{
+          //   }})
           for (var m=0; m < Bknword.length; m++){
             if (Bknword[m] == guess){
               Dsplword[m] = " "+guess;
               console.log("current word " + Dsplword);
-            }
+              pixy = pixy+60;
+              usepix = ('"' + pixy + 'px"');
+              console.log("pixy is " + pixy + " usepix is " + usepix);
+              document.getElementById("slicer").style.width = (pixy + "px");
+              // document.getElementById("slicer").style.width = "60px";
+              }
             else{
-              console.log("skip letter "+Bknword[m]);
             }
           }  
           if (Dsplword.indexOf(" _ ") < 0){
-            console.log("the index is " + Dsplword.indexOf("_"));
-            i_winlose(0);    
+            Uscore = Uscore+1;  
+            i_winlose(0);             
             reset();          
           }
           else{
@@ -100,7 +144,7 @@
           guessList.push(guess);
           i_update();
           console.log("guess list ", guessList);
-        // losing conditions reset
+          // losing conditions reset
           if (userTries <= 0){
             i_winlose(1);
             reset();
